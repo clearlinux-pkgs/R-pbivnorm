@@ -4,17 +4,24 @@
 #
 Name     : R-pbivnorm
 Version  : 0.6.0
-Release  : 7
+Release  : 8
 URL      : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Summary  : Vectorized Bivariate Normal CDF
 Group    : Development/Tools
 License  : GPL-2.0+
-Requires: R-pbivnorm-lib
-BuildRequires : clr-R-helpers
+Requires: R-pbivnorm-lib = %{version}-%{release}
+BuildRequires : buildreq-R
 
 %description
-probabilities from a standard bivariate normal CDF.
+Vectorized bivariate normal CDF
+===============================
+`pbivnorm` is an R package containing a vectorized function to compute the
+bivariate normal CDF.  It is based on
+[the `mnormt` package](http://cran.r-project.org/web/packages/mnormt/index.html)
+by [Adelchi Azzalini](http://azzalini.stat.unipd.it/index-en.html), which uses
+Fortran code by [Alan Genz](http://www.math.wsu.edu/faculty/genz/homepage) to
+compute integrals of multivariate normal densities.
 
 %package lib
 Summary: lib components for the R-pbivnorm package.
@@ -32,11 +39,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530315611
+export SOURCE_DATE_EPOCH=1552780366
 
 %install
+export SOURCE_DATE_EPOCH=1552780366
 rm -rf %{buildroot}
-export SOURCE_DATE_EPOCH=1530315611
 export LANG=C
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
@@ -54,9 +61,9 @@ echo "FFLAGS = $FFLAGS -march=haswell -ftree-vectorize " >> ~/.R/Makevars
 echo "CXXFLAGS = $CXXFLAGS -march=haswell -ftree-vectorize " >> ~/.R/Makevars
 R CMD INSTALL --install-tests --built-timestamp=${SOURCE_DATE_EPOCH} --build  -l %{buildroot}/usr/lib64/R/library pbivnorm
 for i in `find %{buildroot}/usr/lib64/R/ -name "*.so"`; do mv $i $i.avx2 ; mv $i.avx2 ~/.stash/; done
-echo "CFLAGS = $CFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512 " > ~/.R/Makevars
-echo "FFLAGS = $FFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512 " >> ~/.R/Makevars
-echo "CXXFLAGS = $CXXFLAGS -march=skylake-avx512 -ftree-vectorize -mprefer-vector-width=512  " >> ~/.R/Makevars
+echo "CFLAGS = $CFLAGS -march=skylake-avx512 -ftree-vectorize " > ~/.R/Makevars
+echo "FFLAGS = $FFLAGS -march=skylake-avx512 -ftree-vectorize " >> ~/.R/Makevars
+echo "CXXFLAGS = $CXXFLAGS -march=skylake-avx512 -ftree-vectorize " >> ~/.R/Makevars
 R CMD INSTALL --preclean --install-tests --no-test-load --built-timestamp=${SOURCE_DATE_EPOCH} --build  -l %{buildroot}/usr/lib64/R/library pbivnorm
 for i in `find %{buildroot}/usr/lib64/R/ -name "*.so"`; do mv $i $i.avx512 ; mv $i.avx512 ~/.stash/; done
 echo "CFLAGS = $CFLAGS -ftree-vectorize " > ~/.R/Makevars
@@ -71,8 +78,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export _R_CHECK_FORCE_SUGGESTS_=false
-R CMD check --no-manual --no-examples --no-codoc -l %{buildroot}/usr/lib64/R/library pbivnorm|| : 
-cp ~/.stash/* %{buildroot}/usr/lib64/R/library/*/libs/ || :
+R CMD check --no-manual --no-examples --no-codoc  pbivnorm || :
 
 
 %files
@@ -97,7 +103,6 @@ cp ~/.stash/* %{buildroot}/usr/lib64/R/library/*/libs/ || :
 /usr/lib64/R/library/pbivnorm/help/pbivnorm.rdx
 /usr/lib64/R/library/pbivnorm/html/00Index.html
 /usr/lib64/R/library/pbivnorm/html/R.css
-/usr/lib64/R/library/pbivnorm/libs/symbols.rds
 
 %files lib
 %defattr(-,root,root,-)
