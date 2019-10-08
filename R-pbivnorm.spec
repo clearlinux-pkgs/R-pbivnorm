@@ -4,7 +4,7 @@
 #
 Name     : R-pbivnorm
 Version  : 0.6.0
-Release  : 14
+Release  : 15
 URL      : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Summary  : Vectorized Bivariate Normal CDF
@@ -14,14 +14,7 @@ Requires: R-pbivnorm-lib = %{version}-%{release}
 BuildRequires : buildreq-R
 
 %description
-Vectorized bivariate normal CDF
-===============================
-`pbivnorm` is an R package containing a vectorized function to compute the
-bivariate normal CDF.  It is based on
-[the `mnormt` package](http://cran.r-project.org/web/packages/mnormt/index.html)
-by [Adelchi Azzalini](http://azzalini.stat.unipd.it/index-en.html), which uses
-Fortran code by [Alan Genz](http://www.math.wsu.edu/faculty/genz/homepage) to
-compute integrals of multivariate normal densities.
+probabilities from a standard bivariate normal CDF.
 
 %package lib
 Summary: lib components for the R-pbivnorm package.
@@ -38,13 +31,13 @@ lib components for the R-pbivnorm package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1552933698
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1570565227
 
 %install
-export SOURCE_DATE_EPOCH=1552933698
+export SOURCE_DATE_EPOCH=1570565227
 rm -rf %{buildroot}
-export LANG=C
+export LANG=C.UTF-8
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
@@ -73,12 +66,12 @@ R CMD INSTALL --preclean --install-tests --built-timestamp=${SOURCE_DATE_EPOCH} 
 cp ~/.stash/* %{buildroot}/usr/lib64/R/library/*/libs/ || :
 %{__rm} -rf %{buildroot}%{_datadir}/R/library/R.css
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export _R_CHECK_FORCE_SUGGESTS_=false
-R CMD check --no-manual --no-examples --no-codoc  pbivnorm || :
+R CMD check --no-manual --no-examples --no-codoc pbivnorm || :
 
 
 %files
@@ -108,4 +101,3 @@ R CMD check --no-manual --no-examples --no-codoc  pbivnorm || :
 %defattr(-,root,root,-)
 /usr/lib64/R/library/pbivnorm/libs/pbivnorm.so
 /usr/lib64/R/library/pbivnorm/libs/pbivnorm.so.avx2
-/usr/lib64/R/library/pbivnorm/libs/pbivnorm.so.avx512
