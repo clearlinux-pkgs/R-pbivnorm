@@ -4,7 +4,7 @@
 #
 Name     : R-pbivnorm
 Version  : 0.6.0
-Release  : 17
+Release  : 18
 URL      : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Summary  : Vectorized Bivariate Normal CDF
@@ -26,21 +26,22 @@ lib components for the R-pbivnorm package.
 
 %prep
 %setup -q -c -n pbivnorm
+cd %{_builddir}/pbivnorm
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570565227
+export SOURCE_DATE_EPOCH=1589535256
 
 %install
-export SOURCE_DATE_EPOCH=1570565227
+export SOURCE_DATE_EPOCH=1589535256
 rm -rf %{buildroot}
 export LANG=C.UTF-8
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
-export FCFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
+export FCFLAGS="$FFLAGS -O3 -flto -fno-semantic-interposition "
+export FFLAGS="$FFLAGS -O3 -flto -fno-semantic-interposition "
 export CXXFLAGS="$CXXFLAGS -O3 -flto -fno-semantic-interposition "
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
