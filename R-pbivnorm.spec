@@ -4,7 +4,7 @@
 #
 Name     : R-pbivnorm
 Version  : 0.6.0
-Release  : 20
+Release  : 21
 URL      : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Summary  : Vectorized Bivariate Normal CDF
