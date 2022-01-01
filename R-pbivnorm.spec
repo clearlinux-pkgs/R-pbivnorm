@@ -4,7 +4,7 @@
 #
 Name     : R-pbivnorm
 Version  : 0.6.0
-Release  : 32
+Release  : 33
 URL      : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Source0  : https://cran.r-project.org/src/contrib/pbivnorm_0.6.0.tar.gz
 Summary  : Vectorized Bivariate Normal CDF
@@ -33,10 +33,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634077255
+export SOURCE_DATE_EPOCH=1641071335
 
 %install
-export SOURCE_DATE_EPOCH=1634077255
+export SOURCE_DATE_EPOCH=1641071335
 rm -rf %{buildroot}
 export LANG=C.UTF-8
 export CFLAGS="$CFLAGS -O3 -flto -fno-semantic-interposition "
@@ -102,3 +102,4 @@ R CMD check --no-manual --no-examples --no-codoc pbivnorm || :
 %defattr(-,root,root,-)
 /usr/lib64/R/library/pbivnorm/libs/pbivnorm.so
 /usr/lib64/R/library/pbivnorm/libs/pbivnorm.so.avx2
+/usr/lib64/R/library/pbivnorm/libs/pbivnorm.so.avx512
